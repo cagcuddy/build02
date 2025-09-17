@@ -39,4 +39,16 @@ sh ' mvn clean verify sonar:sonar   -Dsonar.projectKey=HelloWorldTest  -Dsonar.p
             }
         }
 }
+post {
+    success {
+      mail to: 'charlottecuddy@gmail.com',
+           subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+           body: "Build succeeded.\nSee: ${env.BUILD_URL}"
+    }
+    failure {
+      mail to: 'charlottecuddy@gmail.com',
+           subject: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+           body: "Build failed.\nConsole: ${env.BUILD_URL}console"
+    }
+  }
 }
